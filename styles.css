@@ -45,6 +45,10 @@ body {
   outline:none;
   cursor: pointer;
 }
+#searchResultHolder {
+  height: 80%;
+  overflow-y: auto;
+}
 .select-book {
   background-color: cadetblue;
 }

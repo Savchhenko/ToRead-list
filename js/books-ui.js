@@ -24,7 +24,6 @@ export class BooksUI {
       });
 
       this.searchResultHolder.addEventListener('click', (event) => {
-        // this.searchResultHolder.querySelector('#' + event.target.id);
         const targetDiv = event.target;
         const id = event.target.id;
 
@@ -43,6 +42,9 @@ export class BooksUI {
           <h2>${selectedBook.title}</h2>
           <div>Languages available: ${selectedBook.language.join(', ')}</div>
         `;
+
+        
+      console.log(this.currentPage);
       })
     })
   }
