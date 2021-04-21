@@ -1,7 +1,11 @@
 export class BooksUI {
+  searchResultHolder;
+
   api;
 
   constructor(api) {
+    this.searchResultHolder = document.getElementById('searchResultHolder');
+
     const searchInput = document.getElementById('searchInput'),
           searchBtn = document.getElementById('searchBtn');
 
@@ -21,6 +25,17 @@ export class BooksUI {
     page.docs.forEach(item => {
       item.id = item.key.split('/').pop();
     });
-    console.log(page.docs);
-  };
+    
+    const booksHTML = page.docs.reduce((acc, item) => {
+      return (
+        acc +
+        `
+          <div id="${item.id}" class="book-info">${item.title}</div>
+        `
+      );
+    }, '');
+
+    this.searchResultHolder.innerHTML = booksHTML;
+  }
+
 }
