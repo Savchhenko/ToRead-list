@@ -1,5 +1,6 @@
 export class BooksUI {
   searchResultHolder;
+  bookInfoHolder;
 
   currentPage = [];
 
@@ -7,6 +8,7 @@ export class BooksUI {
 
   constructor(api) {
     this.searchResultHolder = document.getElementById('searchResultHolder');
+    this.bookInfoHolder = document.getElementById('bookInfoHolder');
 
     const searchInput = document.getElementById('searchInput'),
           searchBtn = document.getElementById('searchBtn');
@@ -35,7 +37,12 @@ export class BooksUI {
         }
 
         this.selectedBook = selectedBook;
-        targetDiv.classList.add('select-book'); // (?)add/toggle
+        targetDiv.classList.add('select-book'); 
+
+        this.bookInfoHolder.innerHTML = `
+          <h2>${selectedBook.title}</h2>
+          <div>Languages available: ${selectedBook.language.join(', ')}</div>
+        `;
       })
     })
   }
