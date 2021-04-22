@@ -14,7 +14,7 @@ body {
   gap: 20px;
 }
 .left-block {
-  flex: 0 1 200px;
+  flex: 0 1 300px;
   border-right: 1px solid;
 }
 .center-block {
@@ -22,7 +22,7 @@ body {
   text-align: center;
 }
 .right-block {
-  flex: 0 1 200px;
+  flex: 0 1 400px;
   border-left: 1px solid;
   text-align: center;
 }

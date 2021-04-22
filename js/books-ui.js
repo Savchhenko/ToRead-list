@@ -9,13 +9,13 @@ export class BooksUI {
   constructor(api) {
     this.searchResultHolder = document.getElementById('searchResultHolder');
     this.bookInfoHolder = document.getElementById('bookInfoHolder');
+    this.paginationHolder = document.getElementById('pagination');
 
     const searchInput = document.getElementById('searchInput'),
           searchBtn = document.getElementById('searchBtn');
 
     searchBtn.addEventListener('click', () => {
       const querry = searchInput.value;
-      console.log(querry);
 
       if(!querry) return;
 
@@ -42,10 +42,10 @@ export class BooksUI {
           <h2>${selectedBook.title}</h2>
           <div>Languages available: ${selectedBook.language.join(', ')}</div>
         `;
-
         
       console.log(this.currentPage);
       })
+
     })
   }
 
@@ -67,6 +67,12 @@ export class BooksUI {
     }, '');
 
     this.searchResultHolder.innerHTML = booksHTML;
+
+    this.paginationHolder.innerHTML = `
+      <span>Found: ${page.numFound}</span>
+      <span>Start: ${page.start}</span>
+      <span>Page size: 100</span>
+    `;
   }
 
 }
