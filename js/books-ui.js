@@ -14,8 +14,10 @@ export class BooksUI {
     this.paginationHolder = document.getElementById('pagination');
     this.readListHolder = document.getElementById('readListHolder');
 
-    const searchInput = document.getElementById('searchInput'),
-          searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+
+    this.loadBooksList();
 
     // Обработка клика по кнопке "Go!" - вывод результатов
     searchBtn.addEventListener('click', () => {
@@ -62,33 +64,33 @@ export class BooksUI {
         this.centerBtn.addEventListener('click', () => {
           console.log('Klick on the center button');
 
-          const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
-          const dataBaseItem = [];
+          // const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
+          // const dataBaseItem = [];
 
-          const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); // функция, которая добавляет значения в БД
+          // const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); // функция, которая добавляет значения в БД
 
-          dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
-          dataBase.push(dataBaseItem);
+          // dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
+          // dataBase.push(dataBaseItem);
 
-          console.log("It's after: ", dataBase);
-          saveDB();
+          // console.log("It's after: ", dataBase);
+          // saveDB();
 
-          dataBase.forEach((item) => {
-            const readListItem = document.createElement('div');
-            readListItem.classList.add('read-list__item');
+          // dataBase.forEach((item) => {
+          //   const readListItem = document.createElement('div');
+          //   readListItem.classList.add('read-list__item');
 
-            const readListItemInnerHTML = `
-              <span>${item[0]} (${item[1]})</span>
-              <span>${item[2]}</span>
-              <div class="read-list__management-links">
-                <a>Mark as read</a>
-                <a>Remove from list</a>
-              </div>
-            `;
+          //   const readListItemInnerHTML = `
+          //     <span>${item[0]} (${item[1]})</span>
+          //     <span>${item[2]}</span>
+          //     <div class="read-list__management-links">
+          //       <a>Mark as read</a>
+          //       <a>Remove from list</a>
+          //     </div>
+          //   `;
 
-            readListItem.innerHTML = readListItemInnerHTML;
-            readListHolder.appendChild(readListItem);
-          })
+          //   readListItem.innerHTML = readListItemInnerHTML;
+          //   readListHolder.appendChild(readListItem);
+          // })
 
         })
 
@@ -124,6 +126,31 @@ export class BooksUI {
     `;
   }
 
+  
+  loadBooksList() {
+    const dataBase = JSON.parse(localStorage.getItem('readList')); // массив
+    console.log('посмотрели есть ли данные в БД', dataBase);
+    if(dataBase) {
+      console.log('БД не пустая, нужно отразить список книг');
+      dataBase.forEach((item) => {
+        const readListItem = document.createElement('div');
+        readListItem.classList.add('read-list__item');
 
+        const readListItemInnerHTML = `
+          <span>${item[0]} (${item[1]})</span>
+          <span>${item[2]}</span>
+          <div class="read-list__management-links">
+            <a>Mark as read</a>
+            <a>Remove from list</a>
+          </div>
+        `;
 
+        readListItem.innerHTML = readListItemInnerHTML;
+        readListHolder.appendChild(readListItem);
+      })
+    }else {
+      console.log('БД пустая');
+    }
+  }
+  
 }
