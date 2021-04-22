@@ -39,11 +39,16 @@ export class BooksUI {
         targetDiv.classList.add('select-book'); 
 
         this.bookInfoHolder.innerHTML = `
-          <h2>${selectedBook.title}</h2>
-          <div>Languages available: ${selectedBook.language.join(', ')}</div>
+          <article>
+            <h1>${selectedBook.title}</h1>
+            <div>
+              <p>Languages available: ${selectedBook.language.join(', ')}</p>
+              <p>Full text available: ${selectedBook.has_fulltext ? 'yes' : 'no'}</p>
+              <p>First publish year: ${selectedBook.first_publish_year}</p>
+              <p>Years puplished: ${selectedBook.publish_year.join(', ')}</p>
+            </div>
+          </article>
         `;
-        
-      console.log(this.currentPage);
       })
 
     })
