@@ -27,6 +27,8 @@ body {
   flex: 0 1 400px;
   border-left: 1px solid;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 .right-block h2 {
   margin-top: 0;
@@ -64,11 +66,17 @@ body {
 }
 .list-title {
   background-color: #CBCBCB;
-  height: 100px;
+  /* height: 100px; */
   border-bottom: 1px solid;
+  flex-grow: 1;
 }
 .list-title p {
   margin: 0;
+}
+.read-list-holder {
+  /* height: 90%; */
+  overflow-y: auto;
+  flex-grow: 5;
 }
 .read-list__item {
   border-bottom: 1px solid;

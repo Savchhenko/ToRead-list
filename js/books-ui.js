@@ -65,24 +65,21 @@ export class BooksUI {
           const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
           const dataBaseItem = [];
 
-          const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); // функция, кот добавляет значения в БД
+          const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); // функция, которая добавляет значения в БД
 
           dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
           dataBase.push(dataBaseItem);
+
           console.log("It's after: ", dataBase);
           saveDB();
 
           dataBase.forEach((item) => {
-            const title = item[0];
-            const lang = item[1];
-            const author = item[2];
-
             const readListItem = document.createElement('div');
             readListItem.classList.add('read-list__item');
 
             const readListItemInnerHTML = `
-              <span>${title} (${lang})</span>
-              <span>${author}</span>
+              <span>${item[0]} (${item[1]})</span>
+              <span>${item[2]}</span>
               <div class="read-list__management-links">
                 <a>Mark as read</a>
                 <a>Remove from list</a>
@@ -126,5 +123,7 @@ export class BooksUI {
       <span>Page size: 100</span>
     `;
   }
+
+
 
 }
