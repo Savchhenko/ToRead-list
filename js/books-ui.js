@@ -130,12 +130,15 @@ export class BooksUI {
   loadBooksList() {
     const dataBase = JSON.parse(localStorage.getItem('readList')); // массив
     console.log('посмотрели есть ли данные в БД', dataBase);
+    console.log(dataBase.length);
     if(dataBase) {
       console.log('БД не пустая, нужно отразить список книг');
       dataBase.forEach((item) => this.createListItem(item))
     }else {
       console.log('БД пустая');
     }
+
+    this.displayBookListStatus(dataBase.length, 0);
   }
 
   createListItem(item) {
@@ -153,6 +156,14 @@ export class BooksUI {
 
     readListItem.innerHTML = readListItemInnerHTML;
     readListHolder.appendChild(readListItem);
+  }
+
+  displayBookListStatus(numBooks, numReadBooks) {
+    const listTitle = document.getElementById('listTitle');
+    const listStatus = document.createElement('p');
+    listStatus.innerHTML = `${numBooks} books, ${numReadBooks} read`;
+    listTitle.appendChild(listStatus);
+
   }
   
 }
