@@ -26,6 +26,9 @@ body {
   border-left: 1px solid;
   text-align: center;
 }
+.right-block h2 {
+  margin-top: 0;
+}
 .search {
   background-color: #CBCBCB;
   border-bottom: 1px solid;

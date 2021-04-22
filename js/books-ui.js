@@ -1,6 +1,8 @@
 export class BooksUI {
   searchResultHolder;
   bookInfoHolder;
+  paginationHolder;
+  readListHolder;
 
   currentPage = [];
 
@@ -10,10 +12,12 @@ export class BooksUI {
     this.searchResultHolder = document.getElementById('searchResultHolder');
     this.bookInfoHolder = document.getElementById('bookInfoHolder');
     this.paginationHolder = document.getElementById('pagination');
+    this.readListHolder = document.getElementById('readListHolder');
 
     const searchInput = document.getElementById('searchInput'),
           searchBtn = document.getElementById('searchBtn');
 
+    // Обработка клика по кнопке "Go!" - вывод результатов
     searchBtn.addEventListener('click', () => {
       const querry = searchInput.value;
 
@@ -23,6 +27,7 @@ export class BooksUI {
         this.processSearchResult(page);
       });
 
+      // Обработка клика по элементу списка - вывод информации в центральный блок
       this.searchResultHolder.addEventListener('click', (event) => {
         const targetDiv = event.target;
         const id = event.target.id;
@@ -50,7 +55,16 @@ export class BooksUI {
             <button id="centerBtn" class="center-btn">Add book to Read List</button>
           </article>
         `;
+        
+        this.centerBtn = document.getElementById('centerBtn');
+  
+        // Обработка клика по кнопке "Add book to Read List" - добавление книги с правый список
+        this.centerBtn.addEventListener('click', () => {
+          console.log('Klick on the center button');
+        })
+
       })
+
 
     })
   }
