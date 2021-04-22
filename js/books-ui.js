@@ -132,25 +132,27 @@ export class BooksUI {
     console.log('посмотрели есть ли данные в БД', dataBase);
     if(dataBase) {
       console.log('БД не пустая, нужно отразить список книг');
-      dataBase.forEach((item) => {
-        const readListItem = document.createElement('div');
-        readListItem.classList.add('read-list__item');
-
-        const readListItemInnerHTML = `
-          <span>${item[0]} (${item[1]})</span>
-          <span>${item[2]}</span>
-          <div class="read-list__management-links">
-            <a>Mark as read</a>
-            <a>Remove from list</a>
-          </div>
-        `;
-
-        readListItem.innerHTML = readListItemInnerHTML;
-        readListHolder.appendChild(readListItem);
-      })
+      dataBase.forEach((item) => this.createListItem(item))
     }else {
       console.log('БД пустая');
     }
+  }
+
+  createListItem(item) {
+    const readListItem = document.createElement('div');
+    readListItem.classList.add('read-list__item');
+
+    const readListItemInnerHTML = `
+      <span>${item[0]} (${item[1]})</span>
+      <span>${item[2]}</span>
+      <div class="read-list__management-links">
+        <a>Mark as read</a>
+        <a>Remove from list</a>
+      </div>
+    `;
+
+    readListItem.innerHTML = readListItemInnerHTML;
+    readListHolder.appendChild(readListItem);
   }
   
 }
