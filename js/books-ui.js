@@ -47,6 +47,7 @@ export class BooksUI {
               <p>First publish year: ${selectedBook.first_publish_year}</p>
               <p>Years puplished: ${selectedBook.publish_year.join(', ')}</p>
             </div>
+            <button id="centerBtn" class="center-btn">Add book to Read List</button>
           </article>
         `;
       })
