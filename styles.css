@@ -46,11 +46,17 @@ body {
   cursor: pointer;
 }
 #searchResultHolder {
-  height: 80%;
+  height: 73%;
   overflow-y: auto;
 }
 .select-book {
   background-color: cadetblue;
+}
+.pagination {
+  height: 55px;
+  background-color: #CBCBCB;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }
 .list-title {
   background-color: #CBCBCB;
