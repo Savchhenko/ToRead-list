@@ -16,6 +16,8 @@ body {
 .left-block {
   flex: 0 1 300px;
   border-right: 1px solid;
+  display: flex;
+  flex-direction: column;
 }
 .center-block {
   flex: 1 1 100%;
@@ -59,7 +61,6 @@ body {
   height: 55px;
   background-color: #CBCBCB;
   border-top: 1px solid;
-  border-bottom: 1px solid;
 }
 .list-title {
   background-color: #CBCBCB;
