@@ -69,3 +69,11 @@ body {
 .list-title p {
   margin: 0;
 }
+.read-list__item {
+  border-bottom: 1px solid;
+  display: flex;
+  flex-direction: column;
+}
+.read-list__management-links {
+  color: blue;
+}

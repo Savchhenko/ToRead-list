@@ -61,6 +61,16 @@ export class BooksUI {
         // Обработка клика по кнопке "Add book to Read List" - добавление книги с правый список
         this.centerBtn.addEventListener('click', () => {
           console.log('Klick on the center button');
+          this.readListHolder.innerHTML = `
+            <div class="read-list__item">
+              <span>${selectedBook.title} (${selectedBook.language})</span>
+              <span>${selectedBook.author_name}</span>
+              <div class="read-list__management-links">
+                <a>Mark as read</a>
+                <a>Remove from list</a>
+              </div>
+            </div>
+          `;
         })
 
       })
