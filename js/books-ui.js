@@ -64,38 +64,21 @@ export class BooksUI {
         this.centerBtn.addEventListener('click', () => {
           console.log('Klick on the center button');
 
-          // const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
-          // const dataBaseItem = [];
+          const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
+          const dataBaseItem = [];
 
-          // const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); // функция, которая добавляет значения в БД
+          const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); // функция, которая добавляет значения в БД
 
-          // dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
-          // dataBase.push(dataBaseItem);
+          dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
+          dataBase.push(dataBaseItem);
 
-          // console.log("It's after: ", dataBase);
-          // saveDB();
+          saveDB();
 
-          // dataBase.forEach((item) => {
-          //   const readListItem = document.createElement('div');
-          //   readListItem.classList.add('read-list__item');
-
-          //   const readListItemInnerHTML = `
-          //     <span>${item[0]} (${item[1]})</span>
-          //     <span>${item[2]}</span>
-          //     <div class="read-list__management-links">
-          //       <a>Mark as read</a>
-          //       <a>Remove from list</a>
-          //     </div>
-          //   `;
-
-          //   readListItem.innerHTML = readListItemInnerHTML;
-          //   readListHolder.appendChild(readListItem);
-          // })
+          this.createListItem(dataBaseItem);
 
         })
 
       })
-
 
     })
   }
@@ -128,9 +111,8 @@ export class BooksUI {
 
   
   loadBooksList() {
-    const dataBase = JSON.parse(localStorage.getItem('readList')); // массив
+    const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
     console.log('посмотрели есть ли данные в БД', dataBase);
-    console.log(dataBase.length);
     if(dataBase) {
       console.log('БД не пустая, нужно отразить список книг');
       dataBase.forEach((item) => this.createListItem(item))
