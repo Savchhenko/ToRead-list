@@ -71,6 +71,17 @@ export class BooksUI {
               </div>
             </div>
           `;
+
+          const dataBase = JSON.parse(localStorage.getItem("readList")) || []; // массив
+          const dataBaseItem = [];
+
+          const saveDB = () => localStorage.setItem("readList", JSON.stringify(dataBase)); // функция, кот добавляет значения в БД
+
+          dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
+          // dataBase.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
+          dataBase.push(dataBaseItem);
+          console.log("It's after: ", dataBase);
+          saveDB();
         })
 
       })
