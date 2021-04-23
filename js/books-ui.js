@@ -107,10 +107,7 @@ export class BooksUI {
     page.docs.forEach(item => {
       item.id = item.key.split('/').pop();
     });
-
     this.currentPage = page.docs;
-    console.log(this.currentPage);
-    
     const booksHTML = page.docs.reduce((acc, item) => {
       return (
         acc +
@@ -119,16 +116,13 @@ export class BooksUI {
         `
       );
     }, '');
-
     this.searchResultHolder.innerHTML = booksHTML;
-
     this.paginationHolder.innerHTML = `
       <span>Found: ${page.numFound}</span>
       <span>Start: ${page.start}</span>
       <span>Page size: 100</span>
     `;
   }
-
   
   loadBooksList() {
     const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
@@ -173,6 +167,8 @@ export class BooksUI {
     // const oderNumber = arr.indexOf(item);
     // const dataBase = JSON.parse(localStorage.getItem('readList'));
     // console.log(oderNumber, dataBase);
+    item.parentNode.parentNode.parentNode.removeChild(item.parentNode.parentNode);
+  
   }
   
 }
