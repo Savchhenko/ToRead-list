@@ -83,6 +83,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.read-list__management-links {
+.read-list__management-links button{
   color: blue;
+  cursor: pointer;
 }

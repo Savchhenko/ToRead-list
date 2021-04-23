@@ -17,14 +17,34 @@ export class BooksUI {
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
 
+    // Загружается список книг в правом блоке
     this.loadBooksList();
 
-    // Обработка клика по кнопке "Go!" - вывод результатов
+    const removeBtns = document.querySelectorAll('#removeBtn'); // массив из всех кнопок
+  
+    removeBtns.forEach(item => {
+      item.addEventListener('click', () => {
+        console.log("нужно удалить книгу ", item, " из списка");
+        this.removeBookFromList(removeBtns, item);
+      })
+    })
+    
+
+    // Обработка нажатия Enter в инпуте - вывод результатов запроса
+    searchInput.addEventListener('keydown', (event) => {
+      if(event.code == 'Enter') {
+          const querry = searchInput.value;
+          if(!querry) return;
+          api.search(querry).then(page => {
+            this.processSearchResult(page);
+          });
+      } 
+    })
+    
+    // Обработка клика по кнопке "Go!" - вывод результатов запроса
     searchBtn.addEventListener('click', () => {
       const querry = searchInput.value;
-
       if(!querry) return;
-
       api.search(querry).then(page => {
         this.processSearchResult(page);
       });
@@ -131,8 +151,8 @@ export class BooksUI {
       <span>${item[0]} (${item[1]})</span>
       <span>${item[2]}</span>
       <div class="read-list__management-links">
-        <a>Mark as read</a>
-        <a>Remove from list</a>
+        <button id="markAsReadBtn">Mark as read</button>
+        <button id="removeBtn">Remove from list</button>
       </div>
     `;
 
@@ -146,6 +166,13 @@ export class BooksUI {
     listStatus.innerHTML = `${numBooks} books, ${numReadBooks} read`;
     listTitle.appendChild(listStatus);
 
+  }
+
+  removeBookFromList(arr, item) {
+    console.log(arr, item);
+    // const oderNumber = arr.indexOf(item);
+    // const dataBase = JSON.parse(localStorage.getItem('readList'));
+    // console.log(oderNumber, dataBase);
   }
   
 }
