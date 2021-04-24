@@ -87,17 +87,12 @@ export class BooksUI {
   
         // Обработка клика по кнопке "Add book to Read List" - добавление книги с правый список
         this.centerBtn.addEventListener('click', () => {
-          console.log('Klick on the center button');
-
           const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
-          const dataBaseItem = [];
-
           dataBase.push([title, lang, author]);
-
           localStorage.setItem('readList', JSON.stringify(dataBase));
 
           this.createListItem([title, lang, author], dataBase.length);
-          this.displayBookListStatus(dataBase.length, 0);
+          this.updateBookListStatus(dataBase.length, 0);
         })
 
       })
@@ -139,7 +134,13 @@ export class BooksUI {
       console.log('БД пустая');
     }
 
-    this.displayBookListStatus(dataBase.length, 0);
+    // Создаёт статус Read List'а
+    const listTitle = document.getElementById('listTitle');
+    const listStatus = document.createElement('p');
+    listStatus.innerHTML = `<span id="numBooks"></span> books, <span id="numReadBooks"></span> read`;
+    listTitle.appendChild(listStatus);
+
+    this.updateBookListStatus(dataBase.length, 0);
   }
 
   createListItem(item, id) {
@@ -159,16 +160,16 @@ export class BooksUI {
     this.readListHolder.appendChild(readListItem);
   }
 
-  displayBookListStatus(numBooks, numReadBooks) {
-    const listTitle = document.getElementById('listTitle');
-    const listStatus = document.createElement('p');
-    listStatus.innerHTML = `${numBooks} books, ${numReadBooks} read`;
-    listTitle.appendChild(listStatus);
+  updateBookListStatus(numBooks, numReadBooks) {
+    const numBooksElem = document.getElementById('numBooks');
+    const numReadBooksElem = document.getElementById('numReadBooks');
+    numBooksElem.innerHTML = numBooks;
+    numReadBooksElem.innerHTML = numReadBooks;
   }
 
   removeBookFromList(item) {
     item.parentNode.parentNode.parentNode.removeChild(item.parentNode.parentNode); // удалили книгу из списка
-    // this.displayBookListStatus(dataDase.length, 0);
+    // this.updateBookListStatus(dataDase.length, 0);
     const dataBase = JSON.parse(localStorage.getItem('readList')); //получили значения из LS
     dataBase.splice(item.value, 1); // 1 - это количество удаляемых элементов
     localStorage.clear();
