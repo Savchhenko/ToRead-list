@@ -123,9 +123,7 @@ export class BooksUI {
   
   loadBooksList() {
     const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
-    console.log('посмотрели есть ли данные в БД', dataBase);
     if(dataBase) {
-      console.log('БД не пустая, нужно отразить список книг');
       // dataBase.forEach((item) => this.createListItem(item))
       for(let i = 0; i < dataBase.length; i++) {
         this.createListItem(dataBase[i], i);
@@ -168,12 +166,12 @@ export class BooksUI {
   }
 
   removeBookFromList(item) {
-    item.parentNode.parentNode.parentNode.removeChild(item.parentNode.parentNode); // удалили книгу из списка
-    // this.updateBookListStatus(dataDase.length, 0);
-    const dataBase = JSON.parse(localStorage.getItem('readList')); //получили значения из LS
-    dataBase.splice(item.value, 1); // 1 - это количество удаляемых элементов
-    localStorage.clear();
+    item.parentNode.parentNode.parentNode.removeChild(item.parentNode.parentNode); // удалили книгу из списка (из DOM)
+    const dataBase = JSON.parse(localStorage.getItem('readList')); 
+    dataBase.splice(item.value, 1); 
+    // localStorage.clear();
     localStorage.setItem('readList', JSON.stringify(dataBase));
+    this.updateBookListStatus(dataBase.length, 0);
   }
   
 }
