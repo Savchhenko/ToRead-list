@@ -1,8 +1,9 @@
 export class BooksUI {
   searchResultHolder;
   bookInfoHolder;
-  paginationHolder;
+  paginationPoints;
   readListHolder;
+  pageIndex;
 
   currentPage = [];
 
@@ -11,11 +12,14 @@ export class BooksUI {
   constructor(api) {
     this.searchResultHolder = document.getElementById('searchResultHolder');
     this.bookInfoHolder = document.getElementById('bookInfoHolder');
-    this.paginationHolder = document.getElementById('pagination');
+    this.paginationPoints = document.getElementById('paginationPoints');
     this.readListHolder = document.getElementById('readListHolder');
 
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
+
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
 
     // Загружается список книг в правом блоке
     this.loadBooksList();
@@ -32,10 +36,11 @@ export class BooksUI {
     })
     
     // Обработка клика по кнопке "Go!" - вывод результатов запроса
-    searchBtn.addEventListener('click', (event) => {
+    searchBtn.addEventListener('click', () => {
+      this.pageIndex = 1;
       const querry = searchInput.value;
       if(!querry) return;
-      api.search(querry).then(page => {
+      api.search(querry, this.pageIndex).then(page => {
         this.processSearchResult(page);
       });
 
@@ -93,6 +98,14 @@ export class BooksUI {
         this.removeBookFromList(event.target);
       }
     })
+
+    nextBtn.addEventListener('click', () => {
+      this.pageIndex++;
+      console.log(this.pageIndex);
+      api.search(searchInput.value, this.pageIndex).then(page => {
+        this.processSearchResult(page);
+    })
+  })
   
   }
 
@@ -110,16 +123,10 @@ export class BooksUI {
       );
     }, '');
     this.searchResultHolder.innerHTML = booksHTML;
-    this.paginationHolder.innerHTML = `
-      <div class="pagination-points">
-        <span>Found: ${page.numFound}</span>
-        <span>Start: ${page.start}</span>
-        <span>Page size: 100</span>
-      </div>
-      <div class="pagination-btns">
-        <button id="prevBtn">Prev results</button>
-        <button id="nextBtn">Next results</button>
-      </div>
+    this.paginationPoints.innerHTML = `
+      <span>Found: ${page.numFound}</span>
+      <span>Start: ${page.start}</span>
+      <span>Page size: 100</span>
     `;
   }
   
