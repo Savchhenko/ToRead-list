@@ -25,7 +25,7 @@ export class BooksUI {
     removeBtns.forEach(item => {
       item.addEventListener('click', () => {
         console.log("нужно удалить книгу ", item, " из списка");
-        this.removeBookFromList(removeBtns, item);
+        this.removeBookFromList(item);
       })
     })
     
@@ -87,15 +87,18 @@ export class BooksUI {
           const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
           const dataBaseItem = [];
 
-          const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); // функция, которая добавляет значения в БД
+          // функция, которая добавляет значения в БД
+          // const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); 
 
-          dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
-          dataBase.push(dataBaseItem);
+          // dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
+          // dataBase.push(dataBaseItem);
+          dataBase.push([selectedBook.title, selectedBook.language, selectedBook.author_name]);
 
-          saveDB();
+          // saveDB();
+          localStorage.setItem('readList', JSON.stringify(dataBase));
 
-          this.createListItem(dataBaseItem);
-
+          this.createListItem([selectedBook.title, selectedBook.language, selectedBook.author_name], dataBase.length);
+          this.displayBookListStatus(dataBase.length, 0);
         })
 
       })
@@ -129,7 +132,10 @@ export class BooksUI {
     console.log('посмотрели есть ли данные в БД', dataBase);
     if(dataBase) {
       console.log('БД не пустая, нужно отразить список книг');
-      dataBase.forEach((item) => this.createListItem(item))
+      // dataBase.forEach((item) => this.createListItem(item))
+      for(let i = 0; i < dataBase.length; i++) {
+        this.createListItem(dataBase[i], i);
+      }
     }else {
       console.log('БД пустая');
     }
@@ -137,7 +143,7 @@ export class BooksUI {
     this.displayBookListStatus(dataBase.length, 0);
   }
 
-  createListItem(item) {
+  createListItem(item, id) {
     const readListItem = document.createElement('div');
     readListItem.classList.add('read-list__item');
 
@@ -146,12 +152,12 @@ export class BooksUI {
       <span>${item[2]}</span>
       <div class="read-list__management-links">
         <button id="markAsReadBtn">Mark as read</button>
-        <button id="removeBtn">Remove from list</button>
+        <button id="removeBtn" value="${id}">Remove from list</button>
       </div>
     `;
 
     readListItem.innerHTML = readListItemInnerHTML;
-    readListHolder.appendChild(readListItem);
+    this.readListHolder.appendChild(readListItem);
   }
 
   displayBookListStatus(numBooks, numReadBooks) {
@@ -159,16 +165,15 @@ export class BooksUI {
     const listStatus = document.createElement('p');
     listStatus.innerHTML = `${numBooks} books, ${numReadBooks} read`;
     listTitle.appendChild(listStatus);
-
   }
 
-  removeBookFromList(arr, item) {
-    console.log(arr, item);
-    // const oderNumber = arr.indexOf(item);
-    // const dataBase = JSON.parse(localStorage.getItem('readList'));
-    // console.log(oderNumber, dataBase);
-    item.parentNode.parentNode.parentNode.removeChild(item.parentNode.parentNode);
-  
+  removeBookFromList(item) {
+    item.parentNode.parentNode.parentNode.removeChild(item.parentNode.parentNode); // удалили книгу из списка
+    // this.displayBookListStatus(dataDase.length, 0);
+    const dataBase = JSON.parse(localStorage.getItem('readList')); //получили значения из LS
+    dataBase.splice(item.value, 1); // 1 - это количество удаляемых элементов
+    localStorage.clear();
+    localStorage.setItem('readList', JSON.stringify(dataBase));
   }
   
 }
