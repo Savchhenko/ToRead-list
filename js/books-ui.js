@@ -20,16 +20,6 @@ export class BooksUI {
     // Загружается список книг в правом блоке
     this.loadBooksList();
 
-    const removeBtns = document.querySelectorAll('#removeBtn'); // массив из всех кнопок
-  
-    removeBtns.forEach(item => {
-      item.addEventListener('click', () => {
-        console.log("нужно удалить книгу ", item, " из списка");
-        this.removeBookFromList(item);
-      })
-    })
-    
-
     // Обработка нажатия Enter в инпуте - вывод результатов запроса
     searchInput.addEventListener('keydown', (event) => {
       if(event.code == 'Enter') {
@@ -42,7 +32,7 @@ export class BooksUI {
     })
     
     // Обработка клика по кнопке "Go!" - вывод результатов запроса
-    searchBtn.addEventListener('click', () => {
+    searchBtn.addEventListener('click', (event) => {
       const querry = searchInput.value;
       if(!querry) return;
       api.search(querry).then(page => {
@@ -94,10 +84,16 @@ export class BooksUI {
           this.createListItem([title, lang, author], dataBase.length);
           this.updateBookListStatus(dataBase.length, 0);
         })
-
       })
-
     })
+
+    // Обработка клика по кнопке Remove from list
+    this.readListHolder.addEventListener('click', (event) => {
+      if(event.target.tagName === 'BUTTON') {
+        this.removeBookFromList(event.target);
+      }
+    })
+  
   }
 
   processSearchResult(page) {
@@ -169,7 +165,6 @@ export class BooksUI {
     item.parentNode.parentNode.parentNode.removeChild(item.parentNode.parentNode); // удалили книгу из списка (из DOM)
     const dataBase = JSON.parse(localStorage.getItem('readList')); 
     dataBase.splice(item.value, 1); 
-    // localStorage.clear();
     localStorage.setItem('readList', JSON.stringify(dataBase));
     this.updateBookListStatus(dataBase.length, 0);
   }
