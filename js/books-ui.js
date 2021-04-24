@@ -111,9 +111,15 @@ export class BooksUI {
     }, '');
     this.searchResultHolder.innerHTML = booksHTML;
     this.paginationHolder.innerHTML = `
-      <span>Found: ${page.numFound}</span>
-      <span>Start: ${page.start}</span>
-      <span>Page size: 100</span>
+      <div class="pagination-points">
+        <span>Found: ${page.numFound}</span>
+        <span>Start: ${page.start}</span>
+        <span>Page size: 100</span>
+      </div>
+      <div class="pagination-btns">
+        <button id="prevBtn">Prev results</button>
+        <button id="nextBtn">Next results</button>
+      </div>
     `;
   }
   
@@ -165,6 +171,7 @@ export class BooksUI {
     item.parentNode.parentNode.parentNode.removeChild(item.parentNode.parentNode); // удалили книгу из списка (из DOM)
     const dataBase = JSON.parse(localStorage.getItem('readList')); 
     dataBase.splice(item.value, 1); 
+    localStorage.clear();
     localStorage.setItem('readList', JSON.stringify(dataBase));
     this.updateBookListStatus(dataBase.length, 0);
   }

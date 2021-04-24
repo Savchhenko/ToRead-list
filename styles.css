@@ -64,6 +64,14 @@ body {
   background-color: #CBCBCB;
   border-top: 1px solid;
 }
+.pagination-points {
+  display: flex;
+  justify-content: center;
+}
+.pagination-btns {
+  display: flex;
+  justify-content: space-evenly;
+}
 .list-title {
   background-color: #CBCBCB;
   /* height: 100px; */
