@@ -65,11 +65,16 @@ export class BooksUI {
         this.selectedBook = selectedBook;
         targetDiv.classList.add('select-book'); 
 
+        const title = selectedBook.title;
+        const lang = selectedBook.language;
+        const author = selectedBook.author_name;
+
         this.bookInfoHolder.innerHTML = `
           <article>
-            <h1>${selectedBook.title}</h1>
+            <h1>${title}</h1>
             <div>
-              <p>Languages available: ${selectedBook.language.join(', ')}</p>
+              <p>Author: ${author ? author : 'unknown'}</p>
+              <p>Languages available: ${lang.join(', ')}</p>
               <p>Full text available: ${selectedBook.has_fulltext ? 'yes' : 'no'}</p>
               <p>First publish year: ${selectedBook.first_publish_year}</p>
               <p>Years puplished: ${selectedBook.publish_year.join(', ')}</p>
@@ -87,17 +92,11 @@ export class BooksUI {
           const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
           const dataBaseItem = [];
 
-          // функция, которая добавляет значения в БД
-          // const saveDB = () => localStorage.setItem('readList', JSON.stringify(dataBase)); 
+          dataBase.push([title, lang, author]);
 
-          // dataBaseItem.push(selectedBook.title, selectedBook.language, selectedBook.author_name);
-          // dataBase.push(dataBaseItem);
-          dataBase.push([selectedBook.title, selectedBook.language, selectedBook.author_name]);
-
-          // saveDB();
           localStorage.setItem('readList', JSON.stringify(dataBase));
 
-          this.createListItem([selectedBook.title, selectedBook.language, selectedBook.author_name], dataBase.length);
+          this.createListItem([title, lang, author], dataBase.length);
           this.displayBookListStatus(dataBase.length, 0);
         })
 
