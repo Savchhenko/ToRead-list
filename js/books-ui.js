@@ -42,6 +42,10 @@ export class BooksUI {
       if(!querry) return;
       api.search(querry, this.pageIndex).then(page => {
         this.processSearchResult(page);
+
+        // Отображает Prev и Next buttons
+        const paginationBtnsDiv = document.getElementById('paginationBtns');
+        paginationBtnsDiv.style.display = 'flex';
       });
 
       // Обработка клика по элементу списка - вывод информации в центральный блок
@@ -110,9 +114,11 @@ export class BooksUI {
 
     // Обработка клика по кнопке Prev results
     prevBtn.addEventListener('click', () => {
+      // prevBtn.disabled = false;
       if(this.pageIndex == '1') {
+        // prevBtn.disabled = true;
         return console.log('Назад нельзя');
-      }
+      } 
       this.pageIndex--;
       console.log(this.pageIndex);
       api.search(searchInput.value, this.pageIndex).then(page => {
