@@ -67,12 +67,13 @@ export class BooksUI {
 
         const title = selectedBook.title;
         const lang = selectedBook.language;
+        const subtitle = selectedBook.subtitle;
         const author = selectedBook.author_name;
 
         this.bookInfoHolder.innerHTML = `
           <article>
             <h1>${title}</h1>
-            <p>Subtitle: ${selectedBook.subtitle ? selectedBook.subtitle : 'no'}</p>
+            <p>Subtitle: ${subtitle ? subtitle : 'no'}</p>
             <div>
               <p>Author: ${author ? author : 'unknown'}</p>
               <p>Languages available: ${lang.join(', ')}</p>
@@ -89,10 +90,14 @@ export class BooksUI {
         // Обработка клика по кнопке "Add book to Read List" - добавление книги с правый список
         this.centerBtn.addEventListener('click', () => {
           const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
-          dataBase.push([title, lang, author]);
+          dataBase.push([title, lang, subtitle, author]);
           localStorage.setItem('readList', JSON.stringify(dataBase));
 
-          this.createListItem([title, lang, author], dataBase.length);
+          if(subtitle) {
+            this.createListItem([title, lang, subtitle, author], dataBase.length);
+          } else {
+            this.createListItem([title, lang, author], dataBase.length);
+          }
           this.updateBookListStatus(dataBase.length, 0);
         })
       })
@@ -174,8 +179,21 @@ export class BooksUI {
   createListItem(item, id) {
     const readListItem = document.createElement('div');
     readListItem.classList.add('read-list__item');
+    console.log(item);
+    let readListItemInnerHTML = ``;
 
-    const readListItemInnerHTML = `
+    if(item.length == 4) {
+      readListItemInnerHTML = `
+      <span>${item[0]} (${item[1]})</span>
+      <span class="subtitle">${item[2]}</span>
+      <span>${item[3]}</span>
+      <div class="read-list__management-links">
+        <button id="markAsReadBtn">Mark as read</button>
+        <button id="removeBtn" value="${id}">Remove from list</button>
+      </div>
+    `;
+    } else {
+      readListItemInnerHTML = `
       <span>${item[0]} (${item[1]})</span>
       <span>${item[2]}</span>
       <div class="read-list__management-links">
@@ -183,6 +201,7 @@ export class BooksUI {
         <button id="removeBtn" value="${id}">Remove from list</button>
       </div>
     `;
+    }
 
     readListItem.innerHTML = readListItemInnerHTML;
     this.readListHolder.appendChild(readListItem);

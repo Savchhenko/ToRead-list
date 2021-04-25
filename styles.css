@@ -91,6 +91,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+.subtitle {
+  color: grey;
+}
 .read-list__management-links button{
   color: blue;
   cursor: pointer;
