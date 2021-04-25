@@ -99,13 +99,26 @@ export class BooksUI {
       }
     })
 
+    // Обработка клика по кнопке Next results
     nextBtn.addEventListener('click', () => {
       this.pageIndex++;
       console.log(this.pageIndex);
       api.search(searchInput.value, this.pageIndex).then(page => {
         this.processSearchResult(page);
+      })
     })
-  })
+
+    // Обработка клика по кнопке Prev results
+    prevBtn.addEventListener('click', () => {
+      if(this.pageIndex == '1') {
+        return console.log('Назад нельзя');
+      }
+      this.pageIndex--;
+      console.log(this.pageIndex);
+      api.search(searchInput.value, this.pageIndex).then(page => {
+        this.processSearchResult(page);
+      })
+    })
   
   }
 
