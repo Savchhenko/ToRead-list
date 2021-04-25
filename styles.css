@@ -2,99 +2,161 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  /* width: 100%; */
   background-color: #e1f5f0;
 }
 .main {
   background-color: white;
-  border: 1px solid;
+  border-radius: 2em;
   margin: 10vh 5vw ;
   height: 80%;
   display: flex; 
   gap: 20px;
+  box-shadow: 0 0 5px rgb(25 25 25 / 25%);
+  overflow: hidden;
+  padding-bottom: 20px;
 }
 .left-block {
-  flex: 0 1 300px;
-  border-right: 1px solid;
+  width: 40vw;
   display: flex;
   flex-direction: column;
 }
 .center-block {
-  flex: 1 1 100%;
+  width: 70vw;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .right-block {
-  flex: 0 1 400px;
-  border-left: 1px solid;
+  width: 40vw;
   text-align: center;
   display: flex;
   flex-direction: column;
 }
+.btn {
+  outline:none;
+  border-radius: 2em;
+  cursor: pointer;
+  background-color: #fff;
+  border-color: darkturquoise;
+  border: 1px darkturquoise solid;
+  color:grey;
+}
+.btn:hover {
+  border: 2px darkturquoise solid;
+  color: grey;
+}
 .right-block h2 {
-  margin-top: 0;
+  margin: 0;
+  font-size: 1.7em;
 }
 .search {
-  background-color: #CBCBCB;
-  border-bottom: 1px solid;
-  height: 100px;
+  height: 25vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 10px;
   padding: 0 10px;
 }
 .search__input {
   outline:none;
+  border-radius: 2em;
+  border: 1px solid;
+  border-color:darkturquoise;
+  color: grey;
+  font-size: 1em;
+  height: 35px;
+  padding-left: 10px;
+}
+.search__input::placeholder {
+  color: grey;
 }
 .search__btn {
   margin-left: 19px;
-  background-color: #3F50B5;
-  color: #fff;
-  outline:none;
-  cursor: pointer;
+  height: 35px;
+  width: 45px;
 }
-#searchResultHolder {
+.searchResultHolder {
   height: 73%;
   overflow-y: auto;
+  margin: 10px;
 }
 .select-book {
-  background-color: cadetblue;
+  background-color: rgba(101, 147, 173, 0.3);
+}
+.book-info {
+  border-bottom: 1px darkturquoise dashed;
+  min-height: 6vh;
+  display: flex;
+  align-items: center;
 }
 .pagination {
   height: 55px;
-  background-color: #CBCBCB;
-  border-top: 1px solid;
 }
 .pagination-points {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  color: grey;
+  margin-bottom: 10px;
 }
 .pagination-btns {
   display: none;
   justify-content: space-evenly;
 }
+.center-btn {
+  height: 5vh;
+  padding: 0 15px;
+  font-size: 1.1em;
+}
+.title {
+  color:darkturquoise;
+}
 .list-title {
-  background-color: #CBCBCB;
-  /* height: 100px; */
-  border-bottom: 1px solid;
-  flex-grow: 1;
+  border-bottom: 1px dashed;
+  border-color:darkturquoise;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin: 0 10px 10px 0;
 }
 .list-title p {
   margin: 0;
+  color: gray;
 }
 .read-list-holder {
-  /* height: 90%; */
   overflow-y: auto;
-  flex-grow: 5;
+  margin: 0 10px 10px 0;
 }
 .read-list__item {
-  border-bottom: 1px solid;
+  border-bottom: 1px dashed;
+  border-color:darkturquoise;
   display: flex;
   flex-direction: column;
+  padding: 7px 0;
+}
+.read-list__item:last-child {
+  border-bottom: none;
 }
 .subtitle {
   color: grey;
 }
-.read-list__management-links button{
-  color: blue;
-  cursor: pointer;
+.read-list__management-links {
+  margin: 5px 0;
+}
+.read-list__management-links button {
+  height: 30px;
+  padding: 0 10px;
+}
+.mark-as-read-btn:hover {
+  /* transition: 1s; */
+  color: #2eb04a;
+  border-color: #2eb04a;
+  border: 2px solid;
+  /* font-size: 1.05em; */
+}
+.remove-btn:hover {
+  color: red;
+  border-color: red;
 }

@@ -9,17 +9,17 @@
     <main class="main">
       <div class="left-block">
         <div class="search">
-          <input type="text" class="search__input" id="searchInput">
-          <button class="search__btn" id="searchBtn">Go!</button>
+          <input type="text" class="search__input" id="searchInput" placeholder="Enter the text">
+          <button class="search__btn btn" id="searchBtn">Go!</button>
         </div>
         <!-- /.search -->
-        <div id="searchResultHolder"></div>
+        <div id="searchResultHolder" class="searchResultHolder"></div>
         <!-- /.searchResultHolder -->
         <div class="pagination" id="pagination">
           <div class="pagination-points" id="paginationPoints"></div>     
           <div class="pagination-btns" id="paginationBtns">
-            <button id="prevBtn">< Prev</button>
-            <button id="nextBtn">Next ></button>
+            <button class="btn" id="prevBtn">< Prev</button>
+            <button class="btn" id="nextBtn">Next ></button>
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@
       <!--- /.center-block --->
       <div class="right-block">
         <div class="list-title" id="listTitle">
-          <h2>ToRead list...</h2>
+          <h2 class="title">ToRead list...</h2>
           <!-- <span>0 books, 0 read</span> -->
         </div>
         <!-- /.list-title -->

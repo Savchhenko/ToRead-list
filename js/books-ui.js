@@ -25,15 +25,15 @@ export class BooksUI {
     this.loadBooksList();
 
     // Обработка нажатия Enter в инпуте - вывод результатов запроса
-    searchInput.addEventListener('keydown', (event) => {
-      if(event.code == 'Enter') {
-          const querry = searchInput.value;
-          if(!querry) return;
-          api.search(querry).then(page => {
-            this.processSearchResult(page);
-          });
-      } 
-    })
+    // searchInput.addEventListener('keydown', (event) => {
+    //   if(event.code == 'Enter') {
+    //       const querry = searchInput.value;
+    //       if(!querry) return;
+    //       api.search(querry).then(page => {
+    //         this.processSearchResult(page);
+    //       });
+    //   } 
+    // })
     
     // Обработка клика по кнопке "Go!" - вывод результатов запроса
     searchBtn.addEventListener('click', () => {
@@ -62,8 +62,7 @@ export class BooksUI {
         }
 
         this.selectedBook = selectedBook;
-        targetDiv.classList.add('select-book'); 
-        console.log(this.selectedBook);
+        targetDiv.classList.add('select-book');
 
         const title = selectedBook.title;
         const lang = selectedBook.language;
@@ -72,8 +71,8 @@ export class BooksUI {
 
         this.bookInfoHolder.innerHTML = `
           <article>
-            <h1>${title}</h1>
-            <p>Subtitle: ${subtitle ? subtitle : 'no'}</p>
+            <h1 class="title">${title}</h1>
+            <p class="subtitle">Subtitle: ${subtitle ? subtitle : 'no'}</p>
             <div>
               <p>Author: ${author ? author : 'unknown'}</p>
               <p>Languages available: ${lang.join(', ')}</p>
@@ -81,7 +80,7 @@ export class BooksUI {
               <p>First publish year: ${selectedBook.first_publish_year}</p>
               <p>Years puplished: ${selectedBook.publish_year.join(', ')}</p>
             </div>
-            <button id="centerBtn" class="center-btn">Add book to Read List</button>
+            <button id="centerBtn" class="center-btn btn">Add book to Read List</button>
           </article>
         `;
         
@@ -103,19 +102,27 @@ export class BooksUI {
       })
     })
 
-    // Обработка клика по кнопке Remove from list
+    // Обработка клика по кнопке Remove from list или Remark as read
     this.readListHolder.addEventListener('click', (event) => {
       if(event.target.tagName === 'BUTTON') {
-        this.removeBookFromList(event.target);
+        if(event.target.id == 'removeBtn') {
+          this.removeBookFromList(event.target);
+        } else {
+          console.log(event.target);
+          event.target.parentNode.parentNode.style.color = 'green';
+          event.target.parentNode.style.display = 'none';
+        }
+        
       }
     })
 
     // Обработка клика по кнопке Next results
     nextBtn.addEventListener('click', () => {
       this.pageIndex++;
-      console.log(this.pageIndex);
       api.search(searchInput.value, this.pageIndex).then(page => {
         this.processSearchResult(page);
+
+        prevBtn.disabled = false;
       })
     })
 
@@ -123,11 +130,10 @@ export class BooksUI {
     prevBtn.addEventListener('click', () => {
       // prevBtn.disabled = false;
       if(this.pageIndex == '1') {
-        // prevBtn.disabled = true;
+        prevBtn.disabled = true;
         return console.log('Назад нельзя');
       } 
       this.pageIndex--;
-      console.log(this.pageIndex);
       api.search(searchInput.value, this.pageIndex).then(page => {
         this.processSearchResult(page);
       })
@@ -179,7 +185,6 @@ export class BooksUI {
   createListItem(item, id) {
     const readListItem = document.createElement('div');
     readListItem.classList.add('read-list__item');
-    console.log(item);
     let readListItemInnerHTML = ``;
 
     if(item.length == 4) {
@@ -188,8 +193,8 @@ export class BooksUI {
       <span class="subtitle">${item[2]}</span>
       <span>${item[3]}</span>
       <div class="read-list__management-links">
-        <button id="markAsReadBtn">Mark as read</button>
-        <button id="removeBtn" value="${id}">Remove from list</button>
+        <button class="mark-as-read-btn btn" id="markAsReadBtn">Mark as read</button>
+        <button class="remove-btn btn" id="removeBtn" value="${id}">Remove from list</button>
       </div>
     `;
     } else {
@@ -197,8 +202,8 @@ export class BooksUI {
       <span>${item[0]} (${item[1]})</span>
       <span>${item[2]}</span>
       <div class="read-list__management-links">
-        <button id="markAsReadBtn">Mark as read</button>
-        <button id="removeBtn" value="${id}">Remove from list</button>
+        <button class="mark-as-read-btn btn" id="markAsReadBtn">Mark as read</button>
+        <button class="remove-btn btn" id="removeBtn" value="${id}">Remove from list</button>
       </div>
     `;
     }
