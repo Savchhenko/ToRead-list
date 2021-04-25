@@ -63,6 +63,7 @@ export class BooksUI {
 
         this.selectedBook = selectedBook;
         targetDiv.classList.add('select-book'); 
+        console.log(this.selectedBook);
 
         const title = selectedBook.title;
         const lang = selectedBook.language;
@@ -71,6 +72,7 @@ export class BooksUI {
         this.bookInfoHolder.innerHTML = `
           <article>
             <h1>${title}</h1>
+            <p>Subtitle: ${selectedBook.subtitle ? selectedBook.subtitle : 'no'}</p>
             <div>
               <p>Author: ${author ? author : 'unknown'}</p>
               <p>Languages available: ${lang.join(', ')}</p>
