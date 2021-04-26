@@ -165,7 +165,6 @@ export class BooksUI {
   loadBooksList() {
     const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
     if(dataBase) {
-      // dataBase.forEach((item) => this.createListItem(item))
       for(let i = 0; i < dataBase.length; i++) {
         this.createListItem(dataBase[i], i);
       }
@@ -186,8 +185,9 @@ export class BooksUI {
     const readListItem = document.createElement('div');
     readListItem.classList.add('read-list__item');
     let readListItemInnerHTML = ``;
+    console.log(item);
 
-    if(item.length == 4) {
+    if(item[2]) {
       readListItemInnerHTML = `
       <span>${item[0]} (${item[1]})</span>
       <span class="subtitle">${item[2]}</span>
@@ -200,7 +200,7 @@ export class BooksUI {
     } else {
       readListItemInnerHTML = `
       <span>${item[0]} (${item[1]})</span>
-      <span>${item[2]}</span>
+      <span>${item[3]}</span>
       <div class="read-list__management-links">
         <button class="mark-as-read-btn btn" id="markAsReadBtn">Mark as read</button>
         <button class="remove-btn btn" id="removeBtn" value="${id}">Remove from list</button>
