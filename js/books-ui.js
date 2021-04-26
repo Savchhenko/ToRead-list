@@ -6,6 +6,7 @@ export class BooksUI {
   pageIndex;
 
   currentPage = [];
+  // readBooks;
 
   api;
 
@@ -21,19 +22,15 @@ export class BooksUI {
     const nextBtn = document.getElementById('nextBtn');
     const prevBtn = document.getElementById('prevBtn');
 
+    // this.readBooks = localStorage.getItem('readBooks');
+    // // this.readBooks = this.readBooks.split();
+    // console.log(this.readBooks, 'readBooks initial');
+    // // console.log(typeof this.readBooks);
+
     // Загружается список книг в правом блоке
     this.loadBooksList();
 
-    // Обработка нажатия Enter в инпуте - вывод результатов запроса
-    // searchInput.addEventListener('keydown', (event) => {
-    //   if(event.code == 'Enter') {
-    //       const querry = searchInput.value;
-    //       if(!querry) return;
-    //       api.search(querry).then(page => {
-    //         this.processSearchResult(page);
-    //       });
-    //   } 
-    // })
+
     
     // Обработка клика по кнопке "Go!" - вывод результатов запроса
     searchBtn.addEventListener('click', () => {
@@ -108,9 +105,24 @@ export class BooksUI {
         if(event.target.id == 'removeBtn') {
           this.removeBookFromList(event.target);
         } else {
-          console.log(event.target);
-          event.target.parentNode.parentNode.style.color = 'green';
-          event.target.parentNode.style.display = 'none';
+          // event.target.parentNode.parentNode.style.color = 'green';
+          // event.target.parentNode.style.display = 'none';
+
+          const dataBase = JSON.parse(localStorage.getItem('readList'));
+          const indexBtn = event.target.value;
+          console.log(indexBtn);
+
+          // const readBooks = [];
+          this.readBooks.push(dataBase[indexBtn]);
+          console.log(this.readBooks, 'new array readBooks');
+          localStorage.setItem('readBooks', JSON.stringify(this.readBooks));
+
+          dataBase.splice(indexBtn, 1);
+          console.log(dataBase, 'new readList');
+          localStorage.setItem('readList', JSON.stringify(dataBase));
+
+          //нужно отобразить оба списка
+          this.loadBooksList();
         }
         
       }
@@ -164,12 +176,19 @@ export class BooksUI {
   
   loadBooksList() {
     const dataBase = JSON.parse(localStorage.getItem('readList')) || []; // массив
+    const readBooksDB = JSON.parse(localStorage.getItem('readBooks')) || []; // список прочитанных книг
+
     if(dataBase) {
       for(let i = 0; i < dataBase.length; i++) {
         this.createListItem(dataBase[i], i);
       }
-    }else {
-      console.log('БД пустая');
+    }
+    if(readBooksDB) {
+      console.log('Нужно отобразить второй список');
+      console.log(readBooksDB);
+      for(let i = 0; i < readBooksDB.length; i++) {
+        this.createReadBooksListItem(readBooksDB[i]);
+      }
     }
 
     // Создаёт статус Read List'а
@@ -178,14 +197,38 @@ export class BooksUI {
     listStatus.innerHTML = `<span id="numBooks"></span> books, <span id="numReadBooks"></span> read`;
     listTitle.appendChild(listStatus);
 
-    this.updateBookListStatus(dataBase.length, 0);
+    this.updateBookListStatus(dataBase.length, readBooksDB.length);
+  }
+
+  createReadBooksListItem(item) {
+    console.log(item);
+    const readBooksListItem = document.createElement('div');
+    readBooksListItem.classList.add('read-book-list__item');
+    let readBooksListItemInnerHTML = ``;
+
+    if(item[2]) {
+      readBooksListItemInnerHTML = `
+      <span>${item[0]} (${item[1]})</span>
+      <span class="subtitle">${item[2]}</span>
+      <span>${item[3]}</span>
+    `;
+    } else {
+      readBooksListItemInnerHTML = `
+      <span>${item[0]} (${item[1]})</span>
+      <span>${item[3]}</span>
+      `;
+      console.log(readBooksListItemInnerHTML);
+    }
+
+    readBooksListItem.innerHTML = readBooksListItemInnerHTML;
+    console.log(readBooksListItem);
+    this.readListHolder.appendChild(readBooksListItem);
   }
 
   createListItem(item, id) {
     const readListItem = document.createElement('div');
     readListItem.classList.add('read-list__item');
     let readListItemInnerHTML = ``;
-    console.log(item);
 
     if(item[2]) {
       readListItemInnerHTML = `
@@ -193,7 +236,7 @@ export class BooksUI {
       <span class="subtitle">${item[2]}</span>
       <span>${item[3]}</span>
       <div class="read-list__management-links">
-        <button class="mark-as-read-btn btn" id="markAsReadBtn">Mark as read</button>
+        <button class="mark-as-read-btn btn" id="markAsReadBtn" value="${id}">Mark as read</button>
         <button class="remove-btn btn" id="removeBtn" value="${id}">Remove from list</button>
       </div>
     `;
@@ -202,7 +245,7 @@ export class BooksUI {
       <span>${item[0]} (${item[1]})</span>
       <span>${item[3]}</span>
       <div class="read-list__management-links">
-        <button class="mark-as-read-btn btn" id="markAsReadBtn">Mark as read</button>
+        <button class="mark-as-read-btn btn" id="markAsReadBtn" value="${id}">Mark as read</button>
         <button class="remove-btn btn" id="removeBtn" value="${id}">Remove from list</button>
       </div>
     `;

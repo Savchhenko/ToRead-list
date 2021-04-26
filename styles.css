@@ -138,6 +138,14 @@ body {
   flex-direction: column;
   padding: 7px 0;
 }
+.read-book-list__item {
+  color: green;
+  border-bottom: 1px dashed;
+  border-color:var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  padding: 7px 0;
+}
 .read-list__item:last-child {
   border-bottom: none;
 }
