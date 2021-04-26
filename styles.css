@@ -1,3 +1,6 @@
+:root {
+  --primary-color: darkturquoise;
+}
 body {
   padding: 0;
   margin: 0;
@@ -38,12 +41,11 @@ body {
   border-radius: 2em;
   cursor: pointer;
   background-color: #fff;
-  border-color: darkturquoise;
-  border: 1px darkturquoise solid;
+  border: 1px var(--primary-color) solid;
   color:grey;
 }
 .btn:hover {
-  border: 2px darkturquoise solid;
+  border: 2px var(--primary-color) solid;
   color: grey;
 }
 .right-block h2 {
@@ -62,7 +64,7 @@ body {
   outline:none;
   border-radius: 2em;
   border: 1px solid;
-  border-color:darkturquoise;
+  border-color:var(--primary-color);
   color: grey;
   font-size: 1em;
   height: 35px;
@@ -85,7 +87,7 @@ body {
   background-color: rgba(101, 147, 173, 0.3);
 }
 .book-info {
-  border-bottom: 1px darkturquoise dashed;
+  border-bottom: 1px var(--primary-color) dashed;
   min-height: 6vh;
   display: flex;
   align-items: center;
@@ -109,11 +111,11 @@ body {
   font-size: 1.1em;
 }
 .title {
-  color:darkturquoise;
+  color:var(--primary-color);
 }
 .list-title {
   border-bottom: 1px dashed;
-  border-color:darkturquoise;
+  border-color:var(--primary-color);
   height: 25vh;
   display: flex;
   flex-direction: column;
@@ -131,7 +133,7 @@ body {
 }
 .read-list__item {
   border-bottom: 1px dashed;
-  border-color:darkturquoise;
+  border-color:var(--primary-color);
   display: flex;
   flex-direction: column;
   padding: 7px 0;
@@ -150,11 +152,9 @@ body {
   padding: 0 10px;
 }
 .mark-as-read-btn:hover {
-  /* transition: 1s; */
   color: #2eb04a;
   border-color: #2eb04a;
   border: 2px solid;
-  /* font-size: 1.05em; */
 }
 .remove-btn:hover {
   color: red;
